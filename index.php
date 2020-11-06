@@ -10,13 +10,46 @@
         include_once("header.php");
       ?>
       <main>
+        <!--New contact-->
+
         <!--Search-->
-        <form class="col s12">
+        <form action="#" class="col s12" method="get">
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="search" type="search">
-                    <label for="search">Look up</label>
+                    <input id="search" type="search" />
+                    <label for="search">Search term</label>
                 </div>
+                <!--This is per Materialize best practice-->
+                <button class="btn-floating btn-large waves-effect waves-light brown">
+                    <i class="material-icons">search</i>
+                </button>
+            </div>
+            <div class="row">
+                <div>
+                    <label>
+                        <input name="search-type" type="radio" value="first-name" checked />
+                        <span>First name</span>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input name="search-type" type="radio" value="last-name" checked />
+                        <span>Last name</span>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input name="search-type" type="radio" value="contains" checked />
+                        <span>Contains text</span>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input name="search-type" type="radio" value="city" checked />
+                        <span>City (no state)</span>
+                    </label>
+                </div>
+
             </div>
         </form>
         
