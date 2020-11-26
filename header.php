@@ -1,3 +1,4 @@
+<!--SIDE EFFECTS ONLY-->
 <header>
     <nav>
         <div class="nav-wrapper amber darken-3">

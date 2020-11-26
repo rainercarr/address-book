@@ -1,12 +1,14 @@
 <?php
-//database connection here
-//imports variables $dsn, $username, $password
-include_once("db_credentials.php");
-$dbh = NULL;
-try {
-    $dbh = new PDO($dsn, $username, $password);
-} catch (PDOException $e) {
-    echo "Error! " . $e->getMessage() . "<br/>";
-    die();
+// DEFINITIONS ONLY CLASS
+class Database {
+    public $dbh;
+    public function __construct(MySqlCredential $cr){
+        try {
+            $this->dbh = new PDO($cr->get_dsn(), $cr->get_username(), $cr->get_password());
+            $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Error! " . $e->getMessage() . "<br/>";
+        }
+    }
 }
 ?>
