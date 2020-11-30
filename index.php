@@ -5,7 +5,7 @@
     // DEFINITION IMPORTS
     include_once 'Database.php';
     include_once 'DisplayRecord.php';
-    include_once 'GetField.php';
+    include_once 'Sanitize.php';
     include_once 'RadioSelector.php';
     // SIDE EFFECT IMPORTS
     include_once 'credential.php';
@@ -17,9 +17,9 @@
     // Get Query Results
     $sql = '';
     $sth = NULL;
-    $query = GetField::clean('query');
-    echo $query;
-    $search_type = GetField::clean('search-type');
+    $query = Sanitize::get_field('query');
+    // echo $query;
+    $search_type = Sanitize::get_field('search-type');
     if (strlen($query) != 0) {
         $query = '%' . $query . '%';
         if ($search_type === 'contains') {
@@ -83,41 +83,59 @@
       <?php
         include_once "header.php";
       ?>
-      <main>
+      <main class="container">
         <!--New contact-->
-
+        <div>
+            <div class="content center-align">
+                <a class="btn btn-large" href="record-detail.php"><i class="material-icons icon-in-button">person_add</i> New Contact</a>
+            </div>
+        </div>
         <!--Search-->
-        <form action="index.php" class="col s12" method="GET">
-            <div class="row">
-                <div class="input-field col s12">
-                    <input name="query" id="query" type="query" value="<?php echo GetField::clean('query'); ?>"/>
-                    <label for="query">Search term</label>
+        <form action="index.php" class="" id="search-form" method="GET">
+            <div class="container">
+                <div class="row">
+                    <div class="input-field col s10">
+                        <input class="text-input" id="query" name="query" type="text" value="<?php echo Sanitize::get_field('query'); ?>"/>
+                        <label for="query">Search</label>
+                    </div>
+                    <div class="col center s2">
+                        <button class="btn-floating btn-large waves-effect waves-light red" name="searchbutton">
+                        <i class="material-icons">search</i>
+                        </button>
+                    </div>
+                    <!--This is per Materialize best practice-->
                 </div>
-                <!--This is per Materialize best practice-->
-                <button class="btn-floating btn-large waves-effect waves-light brown" name="searchbutton">
-                    <i class="material-icons">search</i>
-                </button>
             </div>
             <?php 
                 $radio = new RadioSelector($search_type);
             ?>
-            <div class="row">
-                <label>
-                    <input name="search-type" type="radio" value="firstname" <?php echo $radio->checked('firstname', $checked_by_default = true); ?>/>
-                    <span>First name</span>
-                </label>
-                <label>
-                    <input name="search-type" type="radio" value="lastname" <?php echo $radio->checked('lastname'); ?>/>
-                    <span>Last name</span>
-                </label>
-                <label>
-                    <input name="search-type" type="radio" value="contains" <?php echo $radio->checked('contains'); ?>/>
-                    <span>Contains text</span>
-                </label>
-                <label>
-                    <input name="search-type" type="radio" value="city" <?php echo $radio->checked('city'); ?>/>
-                    <span>City (no state)</span>
-                </label>
+            <div class="container">
+                <div class="row center-align">
+                    <div class="col s3">
+                        <label>
+                            <input name="search-type" type="radio" value="firstname" <?php echo $radio->checked('firstname', $checked_by_default = true); ?>/>
+                            <span>First name</span>
+                        </label>
+                    </div>
+                    <div class="col s3">
+                        <label>
+                            <input name="search-type" type="radio" value="lastname" <?php echo $radio->checked('lastname'); ?>/>
+                            <span>Last name</span>
+                        </label>
+                    </div>
+                    <div class="col s3">
+                        <label>
+                            <input name="search-type" type="radio" value="contains" <?php echo $radio->checked('contains'); ?>/>
+                            <span>Contains text</span>
+                        </label>
+                    </div>
+                    <div class="col s3">
+                        <label>
+                            <input name="search-type" type="radio" value="city" <?php echo $radio->checked('city'); ?>/>
+                            <span>City (no state)</span>
+                        </label>
+                    </div>
+                </div>
             </div>
         </form>
         
@@ -125,6 +143,7 @@
         <table class="highlight centered">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Street</th>
@@ -135,7 +154,11 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
+                <!--The entire table body is a form-->
+                <!--The value of the hidden cid input is changed based on which row is clicked-->
+                <form action="record-detail.php" id="records-form" method="GET">
+                    <input id="cid" name="cid" type="hidden" value="" />
+                    <?php
                     //Get every row that has been retrieved from the database
                     while($record = $sth->fetch(PDO::FETCH_ASSOC)) {
                         new DisplayRecord($record);
@@ -145,7 +168,8 @@
                         new DisplayRecord($record);
                     }
                     */
-                ?>
+                    ?>
+                </form>
             </tbody>
         </table>
       </main>
@@ -153,5 +177,7 @@
         include_once("footer.php");
         include_once("scripts.php");
       ?>
+      <!--Script for selecting record to edit-->
+      <script type="text/javascript" src="js/index.js"></script>
     </body>
   </html>
