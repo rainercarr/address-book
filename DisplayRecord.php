@@ -12,7 +12,7 @@ class DisplayRecord {
         echo "
         <tr>
             <td>
-                <button onclick='editRecord($cid)' class='btn btn-small' type='button'>Edit</button>
+                <span class='badge btn white-text' onclick='editRecord($cid)'>Edit</span>
             </td>
             <td>$firstname $middlename $lastname</td>
             <td>$description</td>

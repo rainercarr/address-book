@@ -96,6 +96,29 @@ if ($editing) {
                             <label for="notes">Notes</label>
                         </div>
                     </div>
+                    <!--Checkbox-->
+                    <div class="row">
+                        <input name="cbox-nodefault" type="checkbox" value="cbox 1" />
+                        <input name="cbox-nodefault" type="checkbox" value="cbox 2" />
+                        <input name="cbox-nodefault" type="checkbox" value="cbox 3" />
+                    </div>
+                    <div class="row">
+                        <input name="cbox-default" type="checkbox" value="cbox 1" />
+                        <input name="cbox-default" type="checkbox" value="cbox 2" />
+                        <input name="cbox-default" type="checkbox" value="cbox 3" />
+                    </div>
+                    <!--Radio-->
+                    <div class="row">
+                        <input name="rbutton-nodefault" type="radio" value="rbutton 1" />
+                        <input name="rbutton-nodefault" type="radio" value="rbutton 2" />
+                        <input name="rbutton-nodefault" type="radio" value="rbutton 3" />
+                    </div>
+                    <div class="row">
+                        <input name="rbutton-default" type="radio" value="rbutton 1" checked/>
+                        <input name="rbutton-default" type="radio" value="rbutton 2" />
+                        <input name="rbutton-default" type="radio" value="rbutton 3" />
+                    </div>
+                    <!--
                     <div class="row">
                         <div class="center-align">
                             <button class="btn btn-large"><i class="material-icons icon-in-button">save</i>   Save</button>
